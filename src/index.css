@@ -1,0 +1,92 @@
+@import "tailwindcss";
+
+@theme {
+  --font-display: "Space Grotesk", "Noto Sans Bengali", sans-serif;
+  --font-body: "Inter", "Noto Sans Bengali", sans-serif;
+  --font-mono: "IBM Plex Mono", monospace;
+
+  --color-void: #06070a;
+  --color-void-soft: #0a0c11;
+  --color-charcoal: #12141a;
+  --color-charcoal-light: #191c24;
+  --color-line: #ffffff14;
+  --color-line-strong: #ffffff26;
+
+  --color-gold: #c6a15b;
+  --color-gold-bright: #e8c468;
+  --color-gold-dim: #8a6f3a;
+
+  --color-green: #3fb37f;
+  --color-green-dim: #1f5c40;
+  --color-red: #d65a5a;
+  --color-red-dim: #5c2626;
+
+  --color-metal: #8b93a1;
+  --color-metal-light: #c4cad4;
+  --color-ink: #f4f5f7;
+  --color-ink-dim: #a6acb8;
+}
+
+@layer base {
+  * {
+    border-color: var(--color-line);
+  }
+  html {
+    scroll-behavior: smooth;
+  }
+  body {
+    background-color: var(--color-void);
+    color: var(--color-ink);
+    font-family: var(--font-body);
+    -webkit-font-smoothing: antialiased;
+  }
+  h1, h2, h3, h4, .font-display {
+    font-family: var(--font-display);
+    letter-spacing: -0.01em;
+  }
+  .font-mono-num {
+    font-family: var(--font-mono);
+    font-variant-numeric: tabular-nums;
+  }
+  :focus-visible {
+    outline: 2px solid var(--color-gold-bright);
+    outline-offset: 3px;
+  }
+  ::selection {
+    background: var(--color-gold-dim);
+    color: var(--color-ink);
+  }
+}
+
+@layer utilities {
+  .bg-grid {
+    background-image:
+      linear-gradient(to right, #ffffff08 1px, transparent 1px),
+      linear-gradient(to bottom, #ffffff08 1px, transparent 1px);
+    background-size: 48px 48px;
+  }
+  .glass {
+    background: linear-gradient(180deg, #ffffff0a, #ffffff03);
+    backdrop-filter: blur(16px);
+    border: 1px solid var(--color-line);
+  }
+  .gold-text {
+    background: linear-gradient(90deg, var(--color-gold-dim), var(--color-gold-bright));
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+  .section-pad {
+    padding-top: clamp(3.5rem, 8vw, 7rem);
+    padding-bottom: clamp(3.5rem, 8vw, 7rem);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}

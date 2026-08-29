@@ -1,0 +1,88 @@
+import type { SiteContent } from "./types";
+
+export const defaultContent: SiteContent = {
+  settings: {
+    brandName: "MasterShot99",
+    tagline: "Master the Market. Follow the Signal. Trade with Confidence.",
+    taglineBn: "সঠিক Analysis, Market Insights এবং Trading Updates — সবকিছু এক জায়গায়।",
+    logoUrl: "/logo.png",
+    whatsapp: "01345357616",
+  },
+  hero: {
+    heading: "Master the Market. Follow the Signal. Trade with Confidence.",
+    subheadingBn: "প্রতিদিনের Trading Signal, Market Insights এবং গুরুত্বপূর্ণ Trading Updates — সবকিছু এক জায়গায়।",
+    primaryCtaLabel: "Join Our Telegram Channel",
+    secondaryCtaLabel: "Explore Results",
+  },
+  trader: {
+    name: "Ishan Islam Shuvo",
+    experienceYears: 6,
+    market: "Binary",
+    bio: "Ishan Islam Shuvo is a trading-focused market analyst with 6 years of experience studying market movements and developing structured trading approaches. Through MasterShot99, he shares trading-focused insights, market updates and signals with his community.",
+    photoUrl: null,
+  },
+  telegram: {
+    url: "https://t.me/mastershot99",
+    memberCount: "14K+",
+    signalTime: "9:30 PM",
+  },
+  social: {
+    facebook: "https://www.facebook.com/profile.php?id=61593363789458",
+    tiktok: "https://www.tiktok.com/@mastershot.99",
+    whatsapp: "01345357616",
+    telegram: "https://t.me/mastershot99",
+  },
+  quotex: {
+    referralUrl: "https://broker-qx.pro/sign-up/?lid=1148693",
+    heading: "Quotex Account তৈরি করুন",
+    description: "আপনার যদি Quotex account না থাকে, তাহলে নিচের referral link ব্যবহার করে account তৈরি করতে পারেন।",
+    buttonLabel: "QUOTEX ACCOUNT তৈরি করুন",
+    disclosure: "এই লিংকটি একটি referral link। Account তৈরি বা trading করার আগে platform-এর terms, conditions এবং trading risks নিজে যাচাই করুন।",
+  },
+  video: {
+    title: "Quotex Account তৈরি করতে সমস্যা হলে এই ভিডিওটি দেখুন",
+    description: "Account তৈরি করার প্রক্রিয়াটি বুঝতে নিচের tutorial video দেখুন।",
+    videoUrl: null,
+    thumbnailUrl: null,
+    published: false,
+  },
+  results: [],
+  events: [],
+  announcements: [
+    {
+      id: "a1",
+      text: "📢 Latest Update — Join the MasterShot99 Community",
+      url: "https://t.me/mastershot99",
+      startDate: null,
+      endDate: null,
+      enabled: true,
+    },
+  ],
+  faq: [
+    { id: "f1", question: "What is MasterShot99?", answer: "MasterShot99 is a trading-focused community led by Ishan Islam Shuvo, sharing market insights, daily updates and trading signals through Telegram." },
+    { id: "f2", question: "Who is Ishan Islam Shuvo?", answer: "Ishan Islam Shuvo is a trading-focused market analyst with 6 years of experience studying market movements and developing structured trading approaches." },
+    { id: "f3", question: "How long has he been trading?", answer: "He has 6 years of experience studying and analysing the markets." },
+    { id: "f4", question: "Which market does he focus on?", answer: "The community's primary focus is the Binary market." },
+    { id: "f5", question: "When are daily signals shared?", answer: "Signals and updates are typically shared daily around 9:30 PM in the Telegram channel." },
+    { id: "f6", question: "How do I join the Telegram community?", answer: "Tap any \"Join Our Telegram Channel\" button on this site, or visit t.me/mastershot99 directly." },
+    { id: "f7", question: "How do I create a Quotex account?", answer: "Use the referral link in the Quotex section of this site, and check the tutorial video for a step-by-step walkthrough." },
+    { id: "f8", question: "Is there a paid plan?", answer: "Current community access details are shared inside the Telegram channel." },
+    { id: "f9", question: "How can I contact MasterShot99?", answer: "You can reach out via Telegram, Facebook, TikTok or WhatsApp — see the Contact page for all links." },
+  ],
+  seo: {
+    title: "MasterShot99 | Trading Signals & Market Insights",
+    metaDescription: "Master the Market. Follow the Signal. Trade with Confidence. Daily trading signals, market insights and updates from Ishan Islam Shuvo.",
+    ogTitle: "MasterShot99 — Trading Signals & Market Insights",
+    ogDescription: "Join a trading-focused community for daily market updates and signals.",
+    canonicalUrl: "https://mastershot99.com",
+  },
+  languages: [
+    { code: "en", label: "English", nativeLabel: "English", rtl: false, enabled: true },
+    { code: "bn", label: "Bengali", nativeLabel: "বাংলা", rtl: false, enabled: true },
+    { code: "hi", label: "Hindi", nativeLabel: "हिन्दी", rtl: false, enabled: true },
+    { code: "ur", label: "Urdu", nativeLabel: "اردو", rtl: true, enabled: true },
+    { code: "ar", label: "Arabic", nativeLabel: "العربية", rtl: true, enabled: true },
+    { code: "es", label: "Spanish", nativeLabel: "Español", rtl: false, enabled: true },
+    { code: "fr", label: "French", nativeLabel: "Français", rtl: false, enabled: true },
+  ],
+};
