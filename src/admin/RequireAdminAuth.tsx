@@ -4,7 +4,8 @@ import { useAdminAuth } from "./AdminAuth";
 import AdminLayout from "./AdminLayout";
 
 export default function RequireAdminAuth({ children }: { children: ReactNode }) {
-  const { isAuthed } = useAdminAuth();
+  const { isAuthed, loading } = useAdminAuth();
+  if (loading) return null;
   if (!isAuthed) return <Navigate to="/admin/login" replace />;
   return <AdminLayout>{children}</AdminLayout>;
 }
