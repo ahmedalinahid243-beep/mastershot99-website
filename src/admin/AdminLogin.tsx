@@ -1,22 +1,28 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Lock } from "lucide-react";
-import { useAdminAuth, DEMO_PASSWORD } from "./AdminAuth";
+import { useAdminAuth } from "./AdminAuth";
 import { useContent } from "../store/ContentContext";
 
 export default function AdminLogin() {
   const { login } = useAdminAuth();
   const { content } = useContent();
+  const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [error, setError] = useState(false);
+  const [error, setError] = useState("");
+  const [submitting, setSubmitting] = useState(false);
   const navigate = useNavigate();
 
-  function handleSubmit(e: React.FormEvent) {
+  async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
-    if (login(password)) {
+    setSubmitting(true);
+    setError("");
+    const result = await login(email, password);
+    setSubmitting(false);
+    if (result.ok) {
       navigate("/admin");
     } else {
-      setError(true);
+      setError(result.error || "Login failed.");
     }
   }
 
@@ -35,31 +41,37 @@ export default function AdminLogin() {
         </div>
         <form onSubmit={handleSubmit} className="space-y-4">
           <div>
+            <label htmlFor="email" className="block text-xs text-ink-dim mb-1.5">Email</label>
+            <input
+              id="email"
+              type="email"
+              value={email}
+              onChange={(e) => { setEmail(e.target.value); setError(""); }}
+              className="w-full rounded-lg bg-charcoal-light border border-line px-4 py-2.5 text-ink focus:outline-none focus:border-gold-dim"
+              autoFocus
+              required
+            />
+          </div>
+          <div>
             <label htmlFor="password" className="block text-xs text-ink-dim mb-1.5">Password</label>
             <input
               id="password"
               type="password"
               value={password}
-              onChange={(e) => {
-                setPassword(e.target.value);
-                setError(false);
-              }}
+              onChange={(e) => { setPassword(e.target.value); setError(""); }}
               className="w-full rounded-lg bg-charcoal-light border border-line px-4 py-2.5 text-ink focus:outline-none focus:border-gold-dim"
-              autoFocus
+              required
             />
-            {error && <p className="mt-2 text-xs text-red">Incorrect password. Try again.</p>}
+            {error && <p className="mt-2 text-xs text-red">{error}</p>}
           </div>
           <button
             type="submit"
-            className="w-full rounded-lg bg-gradient-to-r from-gold-dim to-gold-bright py-2.5 text-sm font-semibold text-void"
+            disabled={submitting}
+            className="w-full rounded-lg bg-gradient-to-r from-gold-dim to-gold-bright py-2.5 text-sm font-semibold text-void disabled:opacity-60"
           >
-            Sign In
+            {submitting ? "Signing in..." : "Sign In"}
           </button>
         </form>
-        <p className="mt-5 text-[11px] text-ink-dim text-center leading-relaxed">
-          Demo credential: <span className="font-mono-num text-gold-bright">{DEMO_PASSWORD}</span>
-          <br />Replace with Supabase Auth before launch.
-        </p>
       </div>
     </div>
   );
