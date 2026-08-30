@@ -3,9 +3,44 @@ import { useContent } from "../../store/ContentContext";
 import { AdminCard, Field, TextInput, TextArea, SaveBar } from "../components/FormControls";
 import { Upload, User } from "lucide-react";
 
+const SUPABASE_URL = import.meta.env.VITE_SUPABASE_URL as string;
+const SUPABASE_ANON_KEY = import.meta.env.VITE_SUPABASE_ANON_KEY as string;
+const ADMIN_SESSION_KEY = "mastershot99_admin_session";
+
+function getAdminToken(): string | null {
+  try {
+    const raw = sessionStorage.getItem(ADMIN_SESSION_KEY);
+    if (!raw) return null;
+    const parsed = JSON.parse(raw);
+    if (parsed?.expires_at && Date.now() / 1000 > parsed.expires_at) return null;
+    return parsed?.access_token ?? null;
+  } catch {
+    return null;
+  }
+}
+
+async function uploadToSupabase(file: File): Promise<string | null> {
+  const token = getAdminToken();
+  if (!token) return null;
+  const ext = file.name.split(".").pop() || "jpg";
+  const path = `trader/${Date.now()}.${ext}`;
+  const res = await fetch(`${SUPABASE_URL}/storage/v1/object/site-images/${path}`, {
+    method: "POST",
+    headers: {
+      apikey: SUPABASE_ANON_KEY,
+      Authorization: `Bearer ${token}`,
+      "Content-Type": file.type,
+    },
+    body: file,
+  });
+  if (!res.ok) return null;
+  return `${SUPABASE_URL}/storage/v1/object/public/site-images/${path}`;
+}
+
 export default function TraderEditor() {
   const { content, setContent } = useContent();
   const [saved, setSaved] = useState(false);
+  const [uploading, setUploading] = useState(false);
   const fileRef = useRef<HTMLInputElement>(null);
 
   function update<K extends keyof typeof content.trader>(key: K, value: (typeof content.trader)[K]) {
@@ -14,17 +49,19 @@ export default function TraderEditor() {
     setTimeout(() => setSaved(false), 1500);
   }
 
-  function handlePhotoUpload(e: React.ChangeEvent<HTMLInputElement>) {
+  async function handlePhotoUpload(e: React.ChangeEvent<HTMLInputElement>) {
     const file = e.target.files?.[0];
     if (!file) return;
-    update("photoUrl", URL.createObjectURL(file));
+    setUploading(true);
+    const url = await uploadToSupabase(file);
+    setUploading(false);
+    if (url) update("photoUrl", url);
   }
 
   return (
     <div>
       <h1 className="font-display text-2xl text-ink">Trader</h1>
       <p className="mt-1 text-sm text-ink-dim">Profile shown on the homepage and About page.</p>
-
       <div className="mt-6 space-y-5">
         <AdminCard title="Photo">
           <div className="flex items-center gap-5">
@@ -38,15 +75,15 @@ export default function TraderEditor() {
             <div>
               <button
                 onClick={() => fileRef.current?.click()}
-                className="inline-flex items-center gap-2 rounded-lg border border-line-strong px-4 py-2 text-sm text-ink hover:border-gold-dim hover:text-gold-bright"
+                disabled={uploading}
+                className="inline-flex items-center gap-2 rounded-lg border border-line-strong px-4 py-2 text-sm text-ink hover:border-gold-dim hover:text-gold-bright disabled:opacity-60"
               >
-                <Upload size={14} /> Upload Photo
+                <Upload size={14} /> {uploading ? "Uploading..." : "Upload Photo"}
               </button>
               <input ref={fileRef} type="file" accept="image/*" className="hidden" onChange={handlePhotoUpload} />
             </div>
           </div>
         </AdminCard>
-
         <AdminCard title="Profile Details">
           <Field label="Name">
             <TextInput value={content.trader.name} onChange={(e) => update("name", e.target.value)} />
