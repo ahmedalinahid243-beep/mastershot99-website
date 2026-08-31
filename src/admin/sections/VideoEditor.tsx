@@ -2,7 +2,40 @@ import { useRef, useState } from "react";
 import { useContent } from "../../store/ContentContext";
 import { AdminCard, Field, TextInput, TextArea, ToggleRow, SaveBar } from "../components/FormControls";
 import { Upload, PlayCircle } from "lucide-react";
-import { supabase } from "../../lib/supabaseClient";
+
+const SUPABASE_URL = import.meta.env.VITE_SUPABASE_URL as string;
+const SUPABASE_ANON_KEY = import.meta.env.VITE_SUPABASE_ANON_KEY as string;
+const ADMIN_SESSION_KEY = "mastershot99_admin_session";
+
+function getAdminToken(): string | null {
+  try {
+    const raw = sessionStorage.getItem(ADMIN_SESSION_KEY);
+    if (!raw) return null;
+    const parsed = JSON.parse(raw);
+    if (parsed?.expires_at && Date.now() / 1000 > parsed.expires_at) return null;
+    return parsed?.access_token ?? null;
+  } catch {
+    return null;
+  }
+}
+
+async function uploadToSupabase(file: File, folder: string): Promise<string | null> {
+  const token = getAdminToken();
+  if (!token) return null;
+  const ext = file.name.split(".").pop() || "bin";
+  const path = `${folder}/${Date.now()}.${ext}`;
+  const res = await fetch(`${SUPABASE_URL}/storage/v1/object/site-images/${path}`, {
+    method: "POST",
+    headers: {
+      apikey: SUPABASE_ANON_KEY,
+      Authorization: `Bearer ${token}`,
+      "Content-Type": file.type,
+    },
+    body: file,
+  });
+  if (!res.ok) return null;
+  return `${SUPABASE_URL}/storage/v1/object/public/site-images/${path}`;
+}
 
 export default function VideoEditor() {
   const { content, setContent } = useContent();
@@ -17,39 +50,22 @@ export default function VideoEditor() {
     setTimeout(() => setSaved(false), 1500);
   }
 
-  async function uploadFile(file: File, folder: string) {
-    const ext = file.name.split(".").pop();
-    const path = `${folder}/${crypto.randomUUID()}.${ext}`;
-    const { error } = await supabase.storage.from("site-images").upload(path, file, {
-      cacheControl: "3600",
-      upsert: false,
-      contentType: file.type || "application/octet-stream",
-    });
-    if (error) {
-      console.error("Upload failed:", error.message);
-      alert("Upload failed: " + error.message);
-      return null;
-    }
-    const { data } = supabase.storage.from("site-images").getPublicUrl(path);
-    return data.publicUrl;
-  }
-
   async function handleVideoChange(e: React.ChangeEvent<HTMLInputElement>) {
     const f = e.target.files?.[0];
     if (!f) return;
     setUploading(true);
-    const url = await uploadFile(f, "videos");
-    if (url) update("videoUrl", url);
+    const url = await uploadToSupabase(f, "videos");
     setUploading(false);
+    if (url) update("videoUrl", url);
   }
 
   async function handleThumbChange(e: React.ChangeEvent<HTMLInputElement>) {
     const f = e.target.files?.[0];
     if (!f) return;
     setUploading(true);
-    const url = await uploadFile(f, "thumbnails");
-    if (url) update("thumbnailUrl", url);
+    const url = await uploadToSupabase(f, "thumbnails");
     setUploading(false);
+    if (url) update("thumbnailUrl", url);
   }
 
   return (
