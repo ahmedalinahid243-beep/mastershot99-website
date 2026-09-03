@@ -15,7 +15,7 @@ export default function HowItWorks() {
         <SectionHeading eyebrow="Process" title="How It Works" align="center" />
         <div className="mt-14 grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
           {STEPS.map((step, i) => (
-            <Reveal key={step.n} delay={i * 100}>
+            <Reveal key={step.n} delay={i * 100} direction={i % 2 === 0 ? "left" : "right"}>
               <div className="relative rounded-2xl border border-line p-6 h-full hover:border-gold-dim/60 transition-colors">
                 <span className="font-mono-num text-3xl text-gold-dim">{step.n}</span>
                 <h3 className="mt-4 font-display text-lg text-ink">{step.title}</h3>
