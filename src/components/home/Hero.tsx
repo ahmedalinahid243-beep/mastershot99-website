@@ -11,9 +11,9 @@ export default function Hero() {
       {/* base gradient wash */}
       <div className="pointer-events-none absolute inset-0 bg-gradient-to-b from-void via-void to-void-soft" />
 
-      {/* ambient gold glow orbs */}
+      {/* ambient glow orbs — gold right, purple left */}
       <div className="pointer-events-none absolute -top-32 right-0 h-[28rem] w-[28rem] rounded-full bg-gold-dim/15 blur-[100px]" />
-      <div className="pointer-events-none absolute top-1/3 -left-40 h-96 w-96 rounded-full bg-gold-dim/10 blur-[110px]" />
+      <div className="pointer-events-none absolute top-1/3 -left-40 h-96 w-96 rounded-full bg-purple-dim/20 blur-[110px]" />
 
       {/* hairline top accent */}
       <div className="pointer-events-none absolute top-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-gold-bright/50 to-transparent" />
@@ -26,7 +26,7 @@ export default function Hero() {
 
       <div className="relative mx-auto max-w-7xl px-5 sm:px-8 pt-16 sm:pt-24 pb-28 sm:pb-36 grid lg:grid-cols-[1.1fr_0.9fr] gap-14 items-center">
         <div>
-          <span className="inline-flex items-center gap-2 rounded-full border border-gold-dim/40 bg-gold-dim/5 px-4 py-1.5 text-xs text-gold-bright font-mono-num uppercase tracking-wider shadow-[0_0_20px_-8px_var(--color-gold-bright)]">
+          <span className="inline-flex items-center gap-2 rounded-full border border-purple-dim/40 bg-purple-dim/5 px-4 py-1.5 text-xs text-purple-bright font-mono-num uppercase tracking-wider shadow-[0_0_20px_-8px_var(--color-purple-bright)]">
             <TrendingUp size={13} /> Binary Market Signals
           </span>
           <h1 className="mt-6 font-display text-4xl sm:text-5xl lg:text-[3.4rem] font-semibold leading-[1.08] text-ink">
@@ -48,7 +48,7 @@ export default function Hero() {
         </div>
 
         <div className="relative">
-          <div className="glass rounded-3xl p-6 sm:p-8 rotate-0 sm:rotate-1 shadow-[0_0_60px_-20px_var(--color-gold-dim)]">
+          <div className="glass rounded-3xl p-6 sm:p-8 rotate-0 sm:rotate-1 shadow-[0_0_60px_-20px_var(--color-purple-dim)]">
             <div className="flex items-center justify-between mb-6">
               <span className="text-xs font-mono-num uppercase tracking-widest text-ink-dim">Signal Feed</span>
               <span className="flex items-center gap-1.5 text-xs text-green">
@@ -64,9 +64,9 @@ export default function Hero() {
                 <p className="text-xs text-ink-dim">Daily Signal</p>
                 <p className="mt-1 font-mono-num text-xl text-gold-bright">{content.telegram.signalTime}</p>
               </div>
-              <div className="rounded-xl border border-line bg-charcoal/40 p-4">
+              <div className="rounded-xl border border-purple-dim/30 bg-charcoal/40 p-4">
                 <p className="text-xs text-ink-dim">Community</p>
-                <p className="mt-1 font-mono-num text-xl text-ink">{content.telegram.memberCount}</p>
+                <p className="mt-1 font-mono-num text-xl text-purple-bright">{content.telegram.memberCount}</p>
               </div>
             </div>
             <div className="mt-5 rounded-xl bg-charcoal-light border border-line p-4">
