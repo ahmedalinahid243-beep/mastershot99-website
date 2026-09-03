@@ -21,7 +21,7 @@ export default function Results() {
           ) : (
             <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
               {published.map((r, i) => (
-                <Reveal key={r.id} delay={i * 80}>
+                <Reveal key={r.id} delay={i * 80} direction={i % 2 === 0 ? "left" : "right"}>
                   <div className="glass rounded-2xl overflow-hidden">
                     <img src={r.imageUrl} alt={r.title} className="w-full aspect-video object-cover" />
                     <div className="p-5">
