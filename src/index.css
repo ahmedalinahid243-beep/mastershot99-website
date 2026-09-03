@@ -1,8 +1,8 @@
 @import "tailwindcss";
 
 @theme {
-  --font-display: "Space Grotesk", "Noto Sans Bengali", sans-serif;
-  --font-body: "Inter", "Noto Sans Bengali", sans-serif;
+  --font-display: "Playfair Display", "Noto Sans Bengali", serif;
+  --font-body: "Manrope", "Noto Sans Bengali", sans-serif;
   --font-mono: "IBM Plex Mono", monospace;
 
   --color-void: #06070a;
@@ -16,9 +16,13 @@
   --color-gold-bright: #e8c468;
   --color-gold-dim: #8a6f3a;
 
-  --color-green: #3fb37f;
+  --color-purple: #9b7fd4;
+  --color-purple-bright: #b49cea;
+  --color-purple-dim: #5f4a92;
+
+  --color-green: #00d68f;
   --color-green-dim: #1f5c40;
-  --color-red: #d65a5a;
+  --color-red: #ff4d5e;
   --color-red-dim: #5c2626;
 
   --color-metal: #8b93a1;
@@ -37,14 +41,17 @@
   body {
     background-color: var(--color-void);
     background-image:
-      radial-gradient(ellipse 900px 500px at 15% -10%, #c6a15b1a, transparent 60%),
-      radial-gradient(ellipse 700px 600px at 100% 20%, #c6a15b12, transparent 55%),
-      radial-gradient(ellipse 800px 500px at 50% 110%, #c6a15b0d, transparent 60%);
+      radial-gradient(ellipse 900px 500px at 15% -10%, #c6a15b1f, transparent 60%),
+      radial-gradient(ellipse 700px 600px at 100% 20%, #9b7fd41a, transparent 55%),
+      radial-gradient(ellipse 900px 600px at 50% 115%, #c6a15b12, transparent 65%),
+      radial-gradient(ellipse 500px 400px at 80% 80%, #9b7fd410, transparent 60%);
     background-attachment: fixed;
     color: var(--color-ink);
     font-family: var(--font-body);
     -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
     position: relative;
+    line-height: 1.6;
   }
   body::before {
     content: "";
@@ -61,11 +68,16 @@
   }
   h1, h2, h3, h4, .font-display {
     font-family: var(--font-display);
-    letter-spacing: -0.01em;
+    letter-spacing: -0.015em;
+    line-height: 1.15;
   }
   .font-mono-num {
     font-family: var(--font-mono);
     font-variant-numeric: tabular-nums;
+    letter-spacing: 0.01em;
+  }
+  a, button {
+    transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
   }
   :focus-visible {
     outline: 2px solid var(--color-gold-bright);
@@ -74,6 +86,17 @@
   ::selection {
     background: var(--color-gold-dim);
     color: var(--color-ink);
+  }
+  ::-webkit-scrollbar {
+    width: 10px;
+  }
+  ::-webkit-scrollbar-track {
+    background: var(--color-void);
+  }
+  ::-webkit-scrollbar-thumb {
+    background: linear-gradient(var(--color-gold-dim), var(--color-purple-dim));
+    border-radius: 999px;
+    border: 2px solid var(--color-void);
   }
 }
 
@@ -86,17 +109,53 @@
   }
   .glass {
     background: linear-gradient(180deg, #ffffff0f, #ffffff04);
-    backdrop-filter: blur(20px);
+    backdrop-filter: blur(24px);
+    -webkit-backdrop-filter: blur(24px);
     border: 1px solid var(--color-line);
-    box-shadow: 0 1px 0 0 #ffffff12 inset, 0 20px 60px -20px #00000080;
+    box-shadow:
+      0 1px 0 0 #ffffff14 inset,
+      0 0 0 1px #00000040,
+      0 25px 70px -25px #000000a0,
+      0 8px 20px -8px #00000060;
+  }
+  .glass-strong {
+    background: linear-gradient(180deg, #ffffff16, #ffffff06);
+    backdrop-filter: blur(28px);
+    -webkit-backdrop-filter: blur(28px);
+    border: 1px solid var(--color-line-strong);
+    box-shadow:
+      0 1px 0 0 #ffffff1c inset,
+      0 30px 80px -25px #000000b0;
   }
   .gold-text {
-    background: linear-gradient(90deg, var(--color-gold-dim), var(--color-gold-bright));
+    background: linear-gradient(90deg, var(--color-gold-dim), var(--color-gold-bright), var(--color-gold-dim));
     -webkit-background-clip: text;
     background-clip: text;
     color: transparent;
     background-size: 200% auto;
     animation: shimmer 6s ease-in-out infinite;
+  }
+  .purple-text {
+    background: linear-gradient(90deg, var(--color-purple-dim), var(--color-purple-bright));
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+  .duotone-border {
+    border-image: linear-gradient(90deg, var(--color-gold-dim), var(--color-purple-dim)) 1;
+  }
+  .glow-gold {
+    box-shadow: 0 0 40px -12px var(--color-gold-bright);
+  }
+  .glow-purple {
+    box-shadow: 0 0 40px -12px var(--color-purple-bright);
+  }
+  .card-hover {
+    transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.4s ease;
+  }
+  .card-hover:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 30px 60px -20px #00000090;
   }
   @keyframes shimmer {
     0%, 100% { background-position: 0% center; }
@@ -105,6 +164,11 @@
   .section-pad {
     padding-top: clamp(3.5rem, 8vw, 7rem);
     padding-bottom: clamp(3.5rem, 8vw, 7rem);
+  }
+  .hairline {
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--color-gold-bright), transparent);
+    opacity: 0.4;
   }
 }
 
