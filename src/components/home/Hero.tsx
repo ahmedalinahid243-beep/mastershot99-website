@@ -8,13 +8,25 @@ export default function Hero() {
 
   return (
     <section className="relative overflow-hidden bg-grid">
+      {/* base gradient wash */}
       <div className="pointer-events-none absolute inset-0 bg-gradient-to-b from-void via-void to-void-soft" />
-      <div className="pointer-events-none absolute -top-24 right-0 h-96 w-96 rounded-full bg-gold-dim/10 blur-3xl" />
-      <CandlestickMotif className="pointer-events-none absolute bottom-0 left-0 w-full h-20 opacity-40" />
 
-      <div className="relative mx-auto max-w-7xl px-5 sm:px-8 pt-16 sm:pt-24 pb-20 grid lg:grid-cols-[1.1fr_0.9fr] gap-14 items-center">
+      {/* ambient gold glow orbs */}
+      <div className="pointer-events-none absolute -top-32 right-0 h-[28rem] w-[28rem] rounded-full bg-gold-dim/15 blur-[100px]" />
+      <div className="pointer-events-none absolute top-1/3 -left-40 h-96 w-96 rounded-full bg-gold-dim/10 blur-[110px]" />
+
+      {/* hairline top accent */}
+      <div className="pointer-events-none absolute top-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-gold-bright/50 to-transparent" />
+
+      {/* large realistic candlestick strip along the bottom */}
+      <div className="pointer-events-none absolute bottom-0 left-0 w-full h-40 sm:h-56 overflow-hidden">
+        <div className="absolute inset-0 bg-gradient-to-t from-void via-void/70 to-transparent z-10" />
+        <CandlestickMotif className="w-full h-full opacity-80" />
+      </div>
+
+      <div className="relative mx-auto max-w-7xl px-5 sm:px-8 pt-16 sm:pt-24 pb-28 sm:pb-36 grid lg:grid-cols-[1.1fr_0.9fr] gap-14 items-center">
         <div>
-          <span className="inline-flex items-center gap-2 rounded-full border border-line px-4 py-1.5 text-xs text-gold-bright font-mono-num uppercase tracking-wider">
+          <span className="inline-flex items-center gap-2 rounded-full border border-gold-dim/40 bg-gold-dim/5 px-4 py-1.5 text-xs text-gold-bright font-mono-num uppercase tracking-wider shadow-[0_0_20px_-8px_var(--color-gold-bright)]">
             <TrendingUp size={13} /> Binary Market Signals
           </span>
           <h1 className="mt-6 font-display text-4xl sm:text-5xl lg:text-[3.4rem] font-semibold leading-[1.08] text-ink">
@@ -36,7 +48,7 @@ export default function Hero() {
         </div>
 
         <div className="relative">
-          <div className="glass rounded-3xl p-6 sm:p-8 rotate-0 sm:rotate-1">
+          <div className="glass rounded-3xl p-6 sm:p-8 rotate-0 sm:rotate-1 shadow-[0_0_60px_-20px_var(--color-gold-dim)]">
             <div className="flex items-center justify-between mb-6">
               <span className="text-xs font-mono-num uppercase tracking-widest text-ink-dim">Signal Feed</span>
               <span className="flex items-center gap-1.5 text-xs text-green">
@@ -44,13 +56,15 @@ export default function Hero() {
                 Live
               </span>
             </div>
-            <CandlestickMotif className="w-full h-32" />
+            <div className="rounded-xl overflow-hidden bg-void-soft/60 border border-line p-2">
+              <CandlestickMotif className="w-full h-36" />
+            </div>
             <div className="mt-6 grid grid-cols-2 gap-4">
-              <div className="rounded-xl border border-line p-4">
+              <div className="rounded-xl border border-line bg-charcoal/40 p-4">
                 <p className="text-xs text-ink-dim">Daily Signal</p>
                 <p className="mt-1 font-mono-num text-xl text-gold-bright">{content.telegram.signalTime}</p>
               </div>
-              <div className="rounded-xl border border-line p-4">
+              <div className="rounded-xl border border-line bg-charcoal/40 p-4">
                 <p className="text-xs text-ink-dim">Community</p>
                 <p className="mt-1 font-mono-num text-xl text-ink">{content.telegram.memberCount}</p>
               </div>
