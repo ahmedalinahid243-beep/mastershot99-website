@@ -17,8 +17,13 @@ export default function BrandEditor() {
   function handleLogoUpload(e: React.ChangeEvent<HTMLInputElement>) {
     const file = e.target.files?.[0];
     if (!file) return;
-    const url = URL.createObjectURL(file);
-    update("logoUrl", url);
+    const reader = new FileReader();
+    reader.onload = () => {
+      if (typeof reader.result === "string") {
+        update("logoUrl", reader.result);
+      }
+    };
+    reader.readAsDataURL(file);
   }
 
   return (
