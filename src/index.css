@@ -161,6 +161,13 @@
     0%, 100% { background-position: 0% center; }
     50% { background-position: 100% center; }
   }
+  @keyframes ticker-scroll {
+    from { transform: translateX(0); }
+    to { transform: translateX(-50%); }
+  }
+  .animate-ticker-scroll {
+    animation: ticker-scroll 22s linear infinite;
+  }
   .section-pad {
     padding-top: clamp(3.5rem, 8vw, 7rem);
     padding-bottom: clamp(3.5rem, 8vw, 7rem);
