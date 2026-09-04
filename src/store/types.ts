@@ -29,12 +29,14 @@ export interface TelegramSettings {
   memberCount: string;
   signalTime: string;
 }
-
 export interface SocialLinks {
   facebook: string;
   tiktok: string;
   whatsapp: string;
   telegram: string;
+  youtube: string;
+}
+
 }
 
 export interface QuotexSettings {
