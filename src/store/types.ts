@@ -1,6 +1,5 @@
 // These types mirror the planned Supabase tables so the frontend, admin UI,
 // and future database schema all speak the same shape.
-
 export interface SiteSettings {
   brandName: string;
   tagline: string;
@@ -8,14 +7,12 @@ export interface SiteSettings {
   logoUrl: string;
   whatsapp: string;
 }
-
 export interface HeroContent {
   heading: string;
   subheadingBn: string;
   primaryCtaLabel: string;
   secondaryCtaLabel: string;
 }
-
 export interface TraderProfile {
   name: string;
   experienceYears: number;
@@ -23,7 +20,6 @@ export interface TraderProfile {
   bio: string;
   photoUrl: string | null;
 }
-
 export interface TelegramSettings {
   url: string;
   memberCount: string;
@@ -36,9 +32,6 @@ export interface SocialLinks {
   telegram: string;
   youtube: string;
 }
-
-}
-
 export interface QuotexSettings {
   referralUrl: string;
   heading: string;
@@ -46,7 +39,6 @@ export interface QuotexSettings {
   buttonLabel: string;
   disclosure: string;
 }
-
 export interface TutorialVideo {
   title: string;
   description: string;
@@ -54,7 +46,6 @@ export interface TutorialVideo {
   thumbnailUrl: string | null;
   published: boolean;
 }
-
 export interface ResultItem {
   id: string;
   imageUrl: string;
@@ -64,7 +55,6 @@ export interface ResultItem {
   category: string;
   published: boolean;
 }
-
 export interface EventItem {
   id: string;
   title: string;
@@ -76,7 +66,6 @@ export interface EventItem {
   buttonUrl: string;
   published: boolean;
 }
-
 export interface Announcement {
   id: string;
   text: string;
@@ -85,13 +74,11 @@ export interface Announcement {
   endDate: string | null;
   enabled: boolean;
 }
-
 export interface FaqItem {
   id: string;
   question: string;
   answer: string;
 }
-
 export interface SeoSettings {
   title: string;
   metaDescription: string;
@@ -99,7 +86,6 @@ export interface SeoSettings {
   ogDescription: string;
   canonicalUrl: string;
 }
-
 export interface Language {
   code: string;
   label: string;
@@ -107,7 +93,6 @@ export interface Language {
   rtl: boolean;
   enabled: boolean;
 }
-
 export interface SiteContent {
   settings: SiteSettings;
   hero: HeroContent;
