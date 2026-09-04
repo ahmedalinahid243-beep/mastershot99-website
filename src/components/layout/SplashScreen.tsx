@@ -3,15 +3,18 @@ import LiveTicker from "../ui/LiveTicker";
 
 const SESSION_KEY = "mastershot99_splash_shown";
 
+function alreadyShownThisSession() {
+  if (typeof window === "undefined") return true;
+  return sessionStorage.getItem(SESSION_KEY) === "1";
+}
+
 export default function SplashScreen() {
-  const [visible, setVisible] = useState(false);
+  const [visible, setVisible] = useState(() => !alreadyShownThisSession());
   const [fading, setFading] = useState(false);
 
   useEffect(() => {
-    const alreadyShown = sessionStorage.getItem(SESSION_KEY);
-    if (alreadyShown) return;
+    if (!visible) return;
 
-    setVisible(true);
     document.body.style.overflow = "hidden";
 
     const fadeTimer = setTimeout(() => setFading(true), 2000);
@@ -24,8 +27,9 @@ export default function SplashScreen() {
     return () => {
       clearTimeout(fadeTimer);
       clearTimeout(removeTimer);
+      document.body.style.overflow = "";
     };
-  }, []);
+  }, [visible]);
 
   if (!visible) return null;
 
