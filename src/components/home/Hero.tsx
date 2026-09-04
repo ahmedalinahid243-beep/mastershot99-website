@@ -1,6 +1,7 @@
 import { useContent } from "../../store/ContentContext";
 import { PrimaryButton, SecondaryButton } from "../ui/Primitives";
 import CandlestickMotif from "../ui/CandlestickMotif";
+import TickerStrip from "../ui/TickerStrip";
 import { TrendingUp, ShieldCheck } from "lucide-react";
 
 export default function Hero() {
@@ -18,10 +19,9 @@ export default function Hero() {
       {/* hairline top accent */}
       <div className="pointer-events-none absolute top-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-gold-bright/50 to-transparent" />
 
-      {/* large realistic candlestick strip along the bottom */}
-      <div className="pointer-events-none absolute bottom-0 left-0 w-full h-40 sm:h-56 overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-t from-void via-void/70 to-transparent z-10" />
-        <CandlestickMotif className="w-full h-full opacity-80" />
+      {/* dense ticker strip divider along the bottom */}
+      <div className="pointer-events-none absolute bottom-8 left-0 w-full h-16 opacity-70">
+        <TickerStrip className="w-full h-full" />
       </div>
 
       <div className="relative mx-auto max-w-7xl px-5 sm:px-8 pt-16 sm:pt-24 pb-28 sm:pb-36 grid lg:grid-cols-[1.1fr_0.9fr] gap-14 items-center">
