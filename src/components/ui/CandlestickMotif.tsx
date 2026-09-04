@@ -1,11 +1,10 @@
-// Quotex-style candlestick chart — vivid solid colors, tall crisp bodies,
-// no blur/glow. Deterministic (no Math.random).
+// Realistic candlestick — thin wick, sharp rectangular body. Deterministic.
 
 const CLOSES = [
-  100, 108, 104, 116, 110, 124, 117, 132, 122, 138,
-  128, 148, 136, 130, 150, 140, 158, 146, 168, 154,
-  176, 162, 182, 168, 196, 178, 204, 186, 218, 196,
-  228, 204, 236, 210, 244, 216, 252, 222, 260, 232,
+  100, 92, 98, 88, 104, 96, 112, 102, 118, 108,
+  128, 116, 122, 132, 124, 140, 130, 148, 138, 152,
+  144, 160, 150, 168, 156, 172, 162, 180, 168, 190,
+  176, 196, 182, 204, 190, 210, 196, 218, 202, 224,
 ];
 
 function buildCandles() {
@@ -16,9 +15,9 @@ function buildCandles() {
     const isUp = close >= open;
     const bodyTop = Math.max(open, close);
     const bodyBot = Math.min(open, close);
-    const wickTop = bodyTop + 4 + ((i * 7) % 8);
-    const wickBot = bodyBot - 4 - ((i * 5) % 7);
-    candles.push({ open, close, isUp, bodyTop, bodyBot, wickTop, wickBot });
+    const wickTop = bodyTop + 4 + ((i * 7) % 10);
+    const wickBot = bodyBot - 4 - ((i * 5) % 9);
+    candles.push({ isUp, bodyTop, bodyBot, wickTop, wickBot });
   }
   return candles;
 }
@@ -28,10 +27,10 @@ export default function CandlestickMotif({ className = "" }: { className?: strin
   const min = Math.min(...candles.map((c) => c.wickBot));
   const max = Math.max(...candles.map((c) => c.wickTop));
   const range = max - min;
-  const W = 400;
-  const H = 100;
+  const W = 500;
+  const H = 110;
   const step = W / candles.length;
-  const scaleY = (v: number) => H - 4 - ((v - min) / range) * (H - 8);
+  const scaleY = (v: number) => H - 6 - ((v - min) / range) * (H - 12);
 
   const GREEN = "#00d68f";
   const RED = "#ff4d5e";
@@ -39,23 +38,16 @@ export default function CandlestickMotif({ className = "" }: { className?: strin
   return (
     <svg viewBox={`0 0 ${W} ${H}`} className={className} preserveAspectRatio="none" aria-hidden="true">
       {candles.map((c, i) => {
-        const x = i * step + step * 0.22;
-        const bodyW = step * 0.56;
+        const cx = i * step + step / 2;
+        const bodyW = step * 0.42;
         const color = c.isUp ? GREEN : RED;
         const bodyYTop = scaleY(c.bodyTop);
         const bodyYBot = scaleY(c.bodyBot);
-        const bodyH = Math.max(2.5, bodyYBot - bodyYTop);
+        const bodyH = Math.max(2, bodyYBot - bodyYTop);
         return (
           <g key={i}>
-            <line
-              x1={x + bodyW / 2}
-              y1={scaleY(c.wickTop)}
-              x2={x + bodyW / 2}
-              y2={scaleY(c.wickBot)}
-              stroke={color}
-              strokeWidth="1.5"
-            />
-            <rect x={x} y={bodyYTop} width={bodyW} height={bodyH} fill={color} rx="0.5" />
+            <line x1={cx} y1={scaleY(c.wickTop)} x2={cx} y2={scaleY(c.wickBot)} stroke={color} strokeWidth="1.4" />
+            <rect x={cx - bodyW / 2} y={bodyYTop} width={bodyW} height={bodyH} fill={color} />
           </g>
         );
       })}
