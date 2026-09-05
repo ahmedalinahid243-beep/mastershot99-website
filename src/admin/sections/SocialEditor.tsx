@@ -24,6 +24,9 @@ export default function SocialEditor() {
           <Field label="TikTok URL">
             <TextInput value={content.social.tiktok} onChange={(e) => update("tiktok", e.target.value)} />
           </Field>
+          <Field label="YouTube URL">
+            <TextInput value={content.social.youtube} onChange={(e) => update("youtube", e.target.value)} />
+          </Field>
           <Field label="WhatsApp Number">
             <TextInput value={content.social.whatsapp} onChange={(e) => update("whatsapp", e.target.value)} />
           </Field>
